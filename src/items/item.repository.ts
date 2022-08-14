@@ -6,6 +6,7 @@ import { ItemStatus } from "./item.status.snum";
 
 export class ItemRepository {
     readonly itemRepository: Repository<Item> = AppDataSource.getRepository(Item);
+    
     async createItem(createItemDto: CreateItemDto): Promise<Item> {
         const { name, price, description } = createItemDto
         const item = this.itemRepository.create({
