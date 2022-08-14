@@ -3,12 +3,12 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from "src/entities/item.entity";
 import { ItemRepository } from './item.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ItemStatus } from './item.status.snum';
 
 @Injectable()
 export class ItemsService {
     constructor(
         private readonly itemRepository: ItemRepository) { }
-    private items: Item[] = [];
 
     async findAll(): Promise<Item[]> {
         return await this.itemRepository.itemRepository.find();
@@ -29,13 +29,19 @@ export class ItemsService {
     async create(createItemDto: CreateItemDto): Promise<Item> {
         return await this.itemRepository.createItem(createItemDto);
     }
-    // async updateStatus(id: string): void {
-    //     await const item = this.findById(id);
-    //     item.status = ItemStatus.SOLD_OUT
-    //     return item;
-    // }
-    deleteById(id: string): void {
-         this.items = this.items.filter((item) => item.id !== id)
+
+
+    async updateStatus(id: string): Promise<Item> {
+        const item = await this.findById(id);
+        item.status = ItemStatus.SOLD_OUT;
+        item.updatedAt = new Date().toISOString();
+        await this.itemRepository.itemRepository.save(item);
+        return item;
+    }
+
+
+    async deleteById(id: string): Promise<void> {
+        await this.itemRepository.itemRepository.delete(id);
     }
 }
 

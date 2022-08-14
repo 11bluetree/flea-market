@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ItemsModule } from './items/items.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ItemsModule,
@@ -13,7 +14,8 @@ import { ItemsModule } from './items/items.module';
     database: 'postgres',
     autoLoadEntities: true,
     entities: [__dirname + '/entities/*.entity.ts']
-  })],
+  }),
+  AuthModule],
 })
 export class AppModule {}
 console.log(__dirname + '/entities/*.entity.ts');
