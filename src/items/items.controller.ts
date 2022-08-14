@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { Item } from "src/entities/item.entity";
 import { CreateItemDto } from './dto/create-item.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('items')
 export class ItemsController {
@@ -17,6 +18,7 @@ export class ItemsController {
     }
 
     @Post()
+    @UseGuards(JwtAuthGuard)
     async create(@Body() createItemDto: CreateItemDto): Promise<Item> {
         return await this.itemService.create(createItemDto);
     }
@@ -27,6 +29,7 @@ export class ItemsController {
     }
 
     @Delete(':id')
+    @UseGuards(JwtAuthGuard)
     async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
         await this.itemService.deleteById(id);
     }

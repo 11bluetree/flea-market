@@ -10,7 +10,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiretion: false, // 有効期限を無視するか
-            secretOrKey: 'secretKey123',
+            secretOrKey: 'secretkey123',
         })
     }
     async validate/* このメソッド名は変えないように */(payload: { id: string, username: string }): Promise<User> {
