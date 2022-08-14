@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm"
 import { Item } from "./entities/item.entity"
+import { User } from "./entities/user.rntity";
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
@@ -8,7 +9,8 @@ export const AppDataSource = new DataSource({
     username: 'postgres',
     password: 'postgres',
     database: 'postgres',
-    entities: [Item], // どのエンティティ情報を読み込むのかの設定基本的にコンパイル済みのファイルを使う
+    // [__dirname + '/entities/*.entity.js']
+    entities: [Item, User], // どのエンティティ情報を読み込むのかの設定基本的にコンパイル済みのファイルを使う
     migrations: ['src/migrations/*.ts'], // どのファイルでマイグレーションを行うか
 })
 
