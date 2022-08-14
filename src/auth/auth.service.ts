@@ -27,8 +27,6 @@ export class AuthService {
             }
         });
 
-        console.log(user.password, password);
-
         // DBのパスワードと与えられたパスワードのハッシュが同じかチェック
         if (user && (await bcrypt.compare(password, user.password))) {
             const payload = {

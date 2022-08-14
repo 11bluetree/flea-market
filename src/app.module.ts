@@ -4,7 +4,7 @@ import { ItemsModule } from './items/items.module';
 import { AuthModule } from './auth/auth.module';
 
 import { Item } from "./entities/item.entity"
-import { User } from "./entities/user.rntity";
+import { User } from "./entities/user.entity";
 
 @Module({
   imports: [AuthModule,ItemsModule,
