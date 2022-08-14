@@ -1,11 +1,14 @@
 import { Test } from '@nestjs/testing'
-import { async } from 'rxjs';
 import { ItemRepository } from './item.repository';
 import { ItemsService } from './items.service'
+import { jest } from '@jest/globals';
 
 const mockItemRepository = () => ({
-    find: jest.fn(), // モック関数
-});
+    itemRepository: {
+        find: jest.fn(), // モック関数
+    }
+}
+);
 
 describe('ItemsServiceTest', () => {
     let itemsService;
@@ -21,17 +24,17 @@ describe('ItemsServiceTest', () => {
             ],
         }).compile();
 
-        itemsService = module.get<ItemsService>(itemsService);
-        itemRepository = module.get<ItemRepository>(itemRepository);
-    })
+        itemsService = module.get<ItemsService>(ItemsService);
+        itemRepository = module.get<ItemRepository>(ItemRepository);
+    });
 
-    describe('findAll', ()=> {
-        it('正常系', async ()=> {
+    describe('findAll', () => {
+        it('正常系', async () => {
             const expected = [];
-            itemRepository.find.mockResulvedValue(expected);
+            itemRepository.itemRepository.find.mockResolvedValue(expected);
             const result = await itemsService.findAll();
 
-            expect(result).toEqual(expected)
+            expect(result).toEqual(expected);
         })
     })
 })
