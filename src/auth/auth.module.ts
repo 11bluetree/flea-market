@@ -6,6 +6,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './auth.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RolesGuard } from './guards/roles.guard';
 import { UserRepository } from './user.repository';
 
 @Module({
@@ -18,7 +19,7 @@ import { UserRepository } from './user.repository';
     }
   })],
   controllers: [AuthController],
-  providers: [AuthService, UserRepository, JwtStrategy, JwtAuthGuard],
-  exports: [JwtStrategy, JwtAuthGuard], // 外部モジュールで使用するクラスを追記
+  providers: [AuthService, UserRepository, JwtStrategy, JwtAuthGuard, RolesGuard],
+  exports: [JwtStrategy, JwtAuthGuard, RolesGuard], // 外部モジュールで使用するクラスを追記
 })
 export class AuthModule { }
