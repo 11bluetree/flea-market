@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
     database: 'postgres',
     // [__dirname + '/entities/*.entity.js']
     entities: [Item, User], // どのエンティティ情報を読み込むのかの設定基本的にコンパイル済みのファイルを使う
-    migrations: ['src/migrations/*.ts'], // どのファイルでマイグレーションを行うか
+    migrations: ['../migrations/*.ts'], // どのファイルでマイグレーションを行うか
 })
 
 AppDataSource.initialize()
