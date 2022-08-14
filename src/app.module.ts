@@ -7,7 +7,7 @@ import { Item } from "./entities/item.entity"
 import { User } from "./entities/user.rntity";
 
 @Module({
-  imports: [ItemsModule,
+  imports: [AuthModule,ItemsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -18,7 +18,7 @@ import { User } from "./entities/user.rntity";
       autoLoadEntities: true,
       entities: [Item, User],
     }),
-    AuthModule],
+    ],
 })
 export class AppModule { }
 console.log(__dirname + '/entities/*.entity.js');
