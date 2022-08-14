@@ -1,5 +1,5 @@
 import { AppDataSource } from "src/data-source";
-import { User } from "src/entities/user.rntity";
+import { User } from "src/entities/user.entity";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import * as bcrypt from 'bcrypt';

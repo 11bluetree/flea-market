@@ -21,4 +21,3 @@ import { User } from "./entities/user.entity";
     ],
 })
 export class AppModule { }
-console.log(__dirname + '/entities/*.entity.js');

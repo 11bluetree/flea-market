@@ -28,6 +28,6 @@ export class Item {
     @ManyToOne(()=> User, (user) => user.items)
     user: User;
 
-    @Column()
+    @Column({nullable: true })
     userId: string;
 }
