@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from "src/entities/item.entity";
 import { ItemRepository } from './item.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ItemStatus } from './item.status.snum';
+import { User } from '@sentry/node';
 
 @Injectable()
 export class ItemsService {
@@ -26,13 +27,17 @@ export class ItemsService {
         return found;
     }
 
-    async create(createItemDto: CreateItemDto): Promise<Item> {
-        return await this.itemRepository.createItem(createItemDto);
+    async create(createItemDto: CreateItemDto, user: User): Promise<Item> {
+        return await this.itemRepository.createItem(createItemDto, user);
     }
 
 
-    async updateStatus(id: string): Promise<Item> {
+    async updateStatus(id: string, user: User): Promise<Item> {
         const item = await this.findById(id);
+
+        if (item.userId === user.id) {
+            throw new BadRequestException('自身の商品を売り切れにすることはできません');
+        }
         item.status = ItemStatus.SOLD_OUT;
         item.updatedAt = new Date().toISOString();
         await this.itemRepository.itemRepository.save(item);
@@ -40,7 +45,12 @@ export class ItemsService {
     }
 
 
-    async deleteById(id: string): Promise<void> {
+    async deleteById(id: string, user: User): Promise<void> {
+        const item = await this.findById(id);
+
+        if (item.userId !== user.id) {
+            throw new BadRequestException('他人の商品を削除することはできません');
+        }
         await this.itemRepository.itemRepository.delete(id);
     }
 }
