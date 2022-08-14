@@ -16,7 +16,7 @@ export const AppDataSource = new DataSource({
 
 AppDataSource.initialize()
   .then(async (ds) => {
-    console.log("datasource is initialized!!");
+    await console.log("datasource is initialized!!");
     // データベースアクセス処理を記述
     // ....
   })

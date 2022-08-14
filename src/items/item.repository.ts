@@ -1,6 +1,6 @@
 import { User } from "@sentry/node";
-import { AppDataSource } from "src/data-source";
-import { Item } from "src/entities/item.entity";
+import { AppDataSource } from "../data-source";
+import { Item } from "../entities/item.entity";
 import { Repository } from "typeorm";
 import { CreateItemDto } from "./dto/create-item.dto";
 import { ItemStatus } from "./item.status.snum";
