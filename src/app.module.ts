@@ -12,6 +12,8 @@ import { ItemsModule } from './items/items.module';
     password: 'postgres',
     database: 'postgres',
     autoLoadEntities: true,
+    entities: [__dirname + '/entities/*.entity.ts']
   })],
 })
 export class AppModule {}
+console.log(__dirname + '/entities/*.entity.ts');

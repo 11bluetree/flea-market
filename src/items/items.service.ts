@@ -1,36 +1,41 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from "src/entities/item.entity";
-import { ItemStatus } from './item.status.snum';
 import { ItemRepository } from './item.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ItemsService {
-    constructor(private readonly itemRepositpry: ItemRepository){}
+    constructor(
+        private readonly itemRepository: ItemRepository) { }
     private items: Item[] = [];
 
-    findAll(): Item[] {
-        return this.items;
+    async findAll(): Promise<Item[]> {
+        return await this.itemRepository.itemRepository.find();
     }
 
-    findById(id: string): Item {
-        const found = this.items.find((item) => item.id === id);
-        if (!found){
+    async findById(id: string): Promise<Item> {
+        const found = await this.itemRepository.itemRepository.findOne({
+            where: {
+                id
+            }
+        })
+        if (!found) {
             throw new NotFoundException();
         }
-        return this.items.find((item) => item.id === id);
+        return found;
     }
 
     async create(createItemDto: CreateItemDto): Promise<Item> {
-        return await this.itemRepositpry.createItem(createItemDto);
+        return await this.itemRepository.createItem(createItemDto);
     }
-    updateStatus(id: string): Item {
-        const item = this.findById(id);
-        item.status = ItemStatus.SOLD_OUT
-        return item;
-    }
+    // async updateStatus(id: string): void {
+    //     await const item = this.findById(id);
+    //     item.status = ItemStatus.SOLD_OUT
+    //     return item;
+    // }
     deleteById(id: string): void {
-        this.items = this.items.filter((item) => item.id !== id)
+         this.items = this.items.filter((item) => item.id !== id)
     }
 }
 

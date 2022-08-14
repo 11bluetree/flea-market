@@ -1,4 +1,5 @@
 import { DataSource } from "typeorm"
+import { Item } from "./entities/item.entity"
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
@@ -7,6 +8,16 @@ export const AppDataSource = new DataSource({
     username: 'postgres',
     password: 'postgres',
     database: 'postgres',
-    entities: ['src/entity/*.entity.ts'], // どのエンティティ情報を読み込むのかの設定基本的にコンパイル済みのファイルを使う
+    entities: [Item], // どのエンティティ情報を読み込むのかの設定基本的にコンパイル済みのファイルを使う
     migrations: ['src/migrations/*.ts'], // どのファイルでマイグレーションを行うか
 })
+
+AppDataSource.initialize()
+  .then(async (ds) => {
+    console.log("datasource is initialized!!");
+    // データベースアクセス処理を記述
+    // ....
+  })
+  .catch((error) => {
+    console.log(error);
+  });
